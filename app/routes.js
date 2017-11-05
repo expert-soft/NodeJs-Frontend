@@ -5,6 +5,7 @@ var path = require('path');
 var router = express.Router();
 var moment = require('moment');
 var math = require('mathjs');
+var CONFIG = require('../config.json');
 const http = require('http');
 
 // export router
@@ -29,7 +30,7 @@ router.get('/', function(requests, responses){
 
 router.get('/login',
     function(requests, responses){
-        responses.render('pages/login');
+        responses.render('pages/login', { user: requests.user });
     });
 
 router.get('/logout',
@@ -55,7 +56,7 @@ router.get('/wallets', function(requests, responses){
                 datajson[i].block_time = moment(Number(datajson[i].block_time)).format("YYYY-MM-DD HH:mm:ss");
                 datajson[i].net = roundNumber(datajson[i].net*100,2);
 			}
-            responses.render('pages/wallets', {users: datajson});
+            responses.render('pages/wallets', { users: datajson });
 	});
 
 	}).on("error", (err) => {
@@ -65,29 +66,68 @@ router.get('/wallets', function(requests, responses){
 });
 
 router.get('/balances', function(requests, responses){
-    http.get('http://localhost:9001/iapi/1/balance', (resp) => {
+    if (requests.user == undefined){
+        responses.redirect('/login');
+    }else {
+        var post_req  = null,
+            post_data = JSON.stringify({ user_id : requests.user.id, account: CONFIG.EaaS_account });
+
+        var post_options = {
+            hostname: CONFIG.EaaS_host,
+            port    : CONFIG.EaaS_port,
+            path    : CONFIG.EaaS_API_balances,
+            method  : 'POST',
+            headers : {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache',
+                'Content-Length': post_data.length
+            }
+        };
+
+        post_req = http.request(post_options, function (res) {
+            console.log('STATUS: ' + res.statusCode);
+            console.log('HEADERS: ' + JSON.stringify(res.headers));
+            res.setEncoding('utf8');
+            res.on('data', function (chunk) {
+                console.log('Response: ', chunk);
+                var datajson = JSON.parse(chunk);
+                for (var i = 0; i < datajson.length; i++) {
+                    datajson[i].available = math.format(Number(datajson[i].amount) - Number(datajson[i].hold),  {notation: 'fixed', precision: 8});
+                    datajson[i].amount = math.format(Number(datajson[i].amount), {notation: 'fixed', precision: 8});
+                    datajson[i].hold = math.format(Number(datajson[i].hold), {notation: 'fixed', precision: 8});
+                    datajson[i].est_usd = math.format(Number(datajson[i].est_usd), {notation: 'fixed', precision: 8});
+                }
+                responses.render('pages/balances', {balances: datajson, user: requests.user});
+            });
+        });
+
+        post_req.on('error', function(e) {
+            console.log('problem with request: ' + e.message);
+        });
+
         let data = '';
 
-    // A chunk of data has been recieved.
-    resp.on('data', (chunk) => {
-        data += chunk;
-});
+        // A chunk of data has been recieved.
+        post_req.on('data', (chunk) => {
+            data += chunk;
+    });
 
-    // The whole response has been received. Print out the result.
-    resp.on('end', () => {
-        var datajson = JSON.parse(data);
+        // The whole response has been received. Print out the result.
+        post_req.on('end', () => {
+            var datajson = JSON.parse(chunk);
         for (var i = 0; i < datajson.length; i++) {
             datajson[i].available = math.format(Number(datajson[i].amount) - Number(datajson[i].hold),  {notation: 'fixed', precision: 8});
             datajson[i].amount = math.format(Number(datajson[i].amount), {notation: 'fixed', precision: 8});
             datajson[i].hold = math.format(Number(datajson[i].hold), {notation: 'fixed', precision: 8});
             datajson[i].est_usd = math.format(Number(datajson[i].est_usd), {notation: 'fixed', precision: 8});
         }
-    responses.render('pages/balances', {users: datajson});
-});
+        responses.render('pages/balances', {users: datajson, user: requests.user});
+    });
 
-}).on("error", (err) => {
-        console.log("Error: " + err.message);
-});
+        post_req.write(post_data);
+        post_req.end();
+
+    }
 
 });
 

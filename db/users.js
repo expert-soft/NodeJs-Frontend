@@ -1,6 +1,6 @@
 //Sequential execution for node.js using ES6 ECMAScript
-var rp = require('request-promise');
 const http = require('http');
+var CONFIG = require('../config.json');
 
 exports.findById = function(id, cb) {
     process.nextTick(function() {
@@ -8,9 +8,9 @@ exports.findById = function(id, cb) {
             post_data = JSON.stringify({ id : id });
 
         var post_options = {
-            hostname: 'localhost',
-            port    : 9001,
-            path    : '/iapi/1/finduser',
+            hostname: CONFIG.EaaS_host,
+            port    : CONFIG.EaaS_port,
+            path    : CONFIG.EaaS_API_finduser,
             method  : 'POST',
             headers : {
                 'Content-Type': 'application/json',
@@ -70,9 +70,9 @@ exports.findByUsername = function(username, password,  cb) {
           post_data = JSON.stringify({ email : username, passwd: password });
 
       var post_options = {
-          hostname: 'localhost',
-          port    : 9001,
-          path    : '/iapi/1/authenticate',
+          hostname: CONFIG.EaaS_host,
+          port    : CONFIG.EaaS_port,
+          path    : CONFIG.EaaS_API_authenticate,
           method  : 'POST',
           headers : {
               'Content-Type': 'application/json',

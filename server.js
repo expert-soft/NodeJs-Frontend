@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var db = require('./db');
+var CONFIG = require('./config.json');
 
 // Configure the local strategy for use by Passport.
 //
@@ -42,7 +43,7 @@ passport.deserializeUser(function(id, cb) {
 });
 
 var app = express();
-var port = 8080;
+var port = CONFIG.server_port;
 
 // use ejs and express layouts
 app.set('view engine', 'ejs');
