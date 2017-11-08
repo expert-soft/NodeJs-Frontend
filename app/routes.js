@@ -23,8 +23,10 @@ function roundNumber(num, scale) {
         return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
     }
 }
+
 // route for our homepage
-router.get('/', function(requests, responses){
+router.get('/',
+    function(requests, responses){
 	responses.render('pages/index', { user: requests.user });
 });
 
@@ -40,7 +42,8 @@ router.get('/logout',
     });
 
 // route for our about
-router.get('/wallets', function(requests, responses){
+router.get('/wallets',
+    function(requests, responses){
     http.get('http://localhost:9001/iapi/1/node', (resp) => {
         let data = '';
 
@@ -56,7 +59,7 @@ router.get('/wallets', function(requests, responses){
                 datajson[i].block_time = moment(Number(datajson[i].block_time)).format("YYYY-MM-DD HH:mm:ss");
                 datajson[i].net = roundNumber(datajson[i].net*100,2);
 			}
-            responses.render('pages/wallets', { users: datajson });
+            responses.render('pages/wallets', { user: requests.user, nodes: datajson });
 	});
 
 	}).on("error", (err) => {
@@ -65,7 +68,8 @@ router.get('/wallets', function(requests, responses){
 
 });
 
-router.get('/balances', function(requests, responses){
+router.get('/balances',
+    function(requests, responses){
     if (requests.user == undefined){
         responses.redirect('/login');
     }else {
@@ -131,11 +135,13 @@ router.get('/balances', function(requests, responses){
 
 });
 
-router.get('/contact', function(requests, responses){
-	responses.render('pages/contact');
+router.get('/pool',
+    function(requests, responses){
+	responses.render('pages/pool', { user: requests.user });
 });
 
-router.post('/contact',function(requests, responses){
+router.post('/contact',
+    function(requests, responses){
 	responses.send('Thanks for contacting us ' + requests.body.name +'! We will respond shortly.');
 });
 
