@@ -1,5 +1,4 @@
-var port = 8080;
-var socket = io.connect('http://localhost:' + port);
+var socket = io.connect('http://' + location.host);
 
 function roundToTwo(num, point){
     return Math.ceil(num * point)/point;

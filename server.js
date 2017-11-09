@@ -98,13 +98,8 @@ app.post('/login',
 
 app.get('/change_lang',
     function(requests, responses){
-        requests.setLocale(requests.query.lang);
-        requests.headers['accept-language'] = requests.query.lang;
-        requests.lang = requests.query.lang;
-        requests.locale = requests.query.lang;
-        responses.locals.lang = requests.query.lang;
-        responses.locals.locale = requests.query.lang;
-        responses.redirect('/');
+        requests.setLocale(i18n.languageFrom(requests.query.lang));
+        responses.render('pages/index', { user: requests.user });
     });
 
 // setting static files (css, img) location
@@ -120,7 +115,7 @@ http.listen(port, function () {
 });
 
 var client = new net.Socket();
-client.connect(9998, '127.0.0.1', function() {
+client.connect(CONFIG.EaaS_wallet_server_port, CONFIG.EaaS_wallet_server_host, function() {
     console.log('Connected:');
 });
 
