@@ -1,0 +1,152 @@
+{
+   "messages": {
+      "": {
+         "Project-Id-Version": " express 3\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2012-06-24 09:50+0200\nPO-Revision-Date: 2012-06-24 09:50+0200\nLast-Translator: Automatically generated\nLanguage-Team: none\nLanguage: en_US\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+      },
+      "Hello, world!": [
+         null,
+         "Hello, world!"
+      ],
+      "Dashboard": [
+         null,
+         "Dashboard"
+      ],
+      "Home": [
+         null,
+         "Home"
+      ],
+      "Wallets status": [
+         null,
+         "Wallets status"
+      ],
+      "Login": [
+         null,
+         "Login"
+      ],
+      "Logout": [
+         null,
+         "Logout"
+      ],
+      "Balances": [
+         null,
+         "Balances"
+      ],
+      "Pool": [
+         null,
+         "Pool"
+      ],
+      "Active": [
+         null,
+         "Active"
+      ],
+      "Maintenance": [
+         null,
+         "Maintenance"
+      ],
+      "On": [
+         null,
+         "On"
+      ],
+      "Off": [
+         null,
+         "Off"
+      ],
+      "Symbol": [
+         null,
+         "Symbol"
+      ],
+      "Currency": [
+         null,
+         "Currency"
+      ],
+      "Status": [
+         null,
+         "Status"
+      ],
+      "Staking": [
+         null,
+         "Staking"
+      ],
+      "Block": [
+         null,
+         "Block"
+      ],
+      "Progress": [
+         null,
+         "Progress"
+      ],
+      "Updated": [
+         null,
+         "Updated"
+      ],
+      "Connection": [
+         null,
+         "Connection"
+      ],
+      "Version": [
+         null,
+         "Version"
+      ],
+      "Peers": [
+         null,
+         "Peers"
+      ],
+      "Avalable": [
+         null,
+         "Avalable"
+      ],
+      "Hold": [
+         null,
+         "Hold"
+      ],
+      "USD": [
+         null,
+         "USD"
+      ],
+      "Actions": [
+         null,
+         "Actions"
+      ],
+      "Sign In": [
+         null,
+         "Sign In"
+      ],
+      "Remember me": [
+         null,
+         "Remember me"
+      ],
+      "Forgot pwd?": [
+         null,
+         "Forgot pwd?"
+      ],
+      "Don't have an account?": [
+         null,
+         "Don't have an account?"
+      ],
+      "Sign Up": [
+         null,
+         "Sign Up"
+      ],
+      "Recover Password": [
+         null,
+         "Recover Password"
+      ],
+      "Enter your Email and instructions will be sent to you!": [
+         null,
+         "Enter your Email and instructions will be sent to you!"
+      ],
+      "Reset": [
+         null,
+         "Reset"
+      ],
+      "Password": [
+         null,
+         "Password"
+      ],
+      "Email": [
+         null,
+         "Email"
+      ]
+   }
+}
+

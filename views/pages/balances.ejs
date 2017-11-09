@@ -3,10 +3,10 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-6 col-8 align-self-center">
-        <h3 class="text-themecolor m-b-0 m-t-0">Balances</h3>
+        <h3 class="text-themecolor m-b-0 m-t-0"><%= gettext("Balances") %></h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">Balances</li>
+            <li class="breadcrumb-item"><a href="/"><%= gettext("Home") %></a></li>
+            <li class="breadcrumb-item active"><%= gettext("Balances") %></li>
         </ol>
     </div>
 </div>
@@ -25,27 +25,27 @@
                     <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th width="3%">Actions</th>
-                            <th width="30%">Symbol</th>
-                            <th width="20%">Avalable</th>
-                            <th width="20%">Hold</th>
-                            <th width="20%">USD</th>
+                            <th width="3%"><%= gettext("Actions") %></th>
+                            <th width="30%"><%= gettext("Symbol") %></th>
+                            <th width="20%"><%= gettext("Avalable") %></th>
+                            <th width="20%"><%= gettext("Hold") %></th>
+                            <th width="20%"><%= gettext("USD") %></th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th width="3%">Actions</th>
-                            <th width="30%">Symbol</th>
-                            <th width="20%">Avalable</th>
-                            <th width="20%">Hold</th>
-                            <th width="20%">USD</th>
+                            <th width="3%"><%= gettext("Actions") %></th>
+                            <th width="30%"><%= gettext("Symbol") %></th>
+                            <th width="20%"><%= gettext("Avalable") %></th>
+                            <th width="20%"><%= gettext("Hold") %></th>
+                            <th width="20%"><%= gettext("USD") %></th>
                         </tr>
                         </tfoot>
                         <tbody>
                         <% for (balance of balances) { %>
                         <tr>
                             <td width="3%"><div class="button-group"><button type="button" class="btn btn-xs btn-info"><i class="fa fa-minus-square"></i></button><button type="button" class="btn btn-xs btn-info"><i class="fa fa-plus-square"></i></button></div></td>
-                            <td width="30%"><img src="http://localhost:9001/images/<%=balance.currency%>.png" height="20px" width="20px"> <%=balance.currency %></td>
+                            <td width="30%"><img src="/images/<%=balance.currency%>.png" height="20px" width="20px"> <%=balance.currency %></td>
                             <td width="10%"><%=balance.available%></td>
                             <td width="10%"><%=balance.hold%></td>
                             <td width="10%"><%=balance.est_usd%></td>
@@ -79,9 +79,9 @@
 <!-- end - This is for export functionality only -->
 <script>
     $(document).ready(function() {
-        $('#myTable').DataTable();
+        $('#example23').DataTable();
         $(document).ready(function() {
-            var table = $('#example').DataTable({
+            var table = $('#example23').DataTable({
                 "columnDefs": [{
                     "visible": false,
                     "targets": 2
@@ -107,7 +107,7 @@
                 }
             });
             // Order by the grouping
-            $('#example tbody').on('click', 'tr.group', function() {
+            $('#example23 tbody').on('click', 'tr.group', function() {
                 var currentOrder = table.order()[0];
                 if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
                     table.order([2, 'desc']).draw();

@@ -1,0 +1,152 @@
+{
+   "messages": {
+      "": {
+         "Project-Id-Version": " express 3\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2012-06-24 09:50+0200\nPO-Revision-Date: 2012-06-24 09:50+0200\nLast-Translator: Automatically generated\nLanguage-Team: none\nLanguage: es\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+      },
+      "Hello, world!": [
+         null,
+         "Привет МИР!"
+      ],
+      "Dashboard": [
+         null,
+         "Панель управления"
+      ],
+     "Home": [
+       null,
+       "Главная страница"
+     ],
+     "Wallets status": [
+       null,
+       "Состояние кошельков"
+     ],
+     "Login": [
+       null,
+       "Авторизоваться"
+     ],
+     "Logout": [
+       null,
+       "Выйти из системы"
+     ],
+     "Balances": [
+       null,
+       "Балансы"
+     ],
+     "Pool": [
+       null,
+       "Пул"
+     ],
+     "Active": [
+       null,
+       "Активна"
+     ],
+     "Maintenance": [
+       null,
+       "Обслуживание"
+     ],
+     "On": [
+       null,
+       "Вкл."
+     ],
+     "Off": [
+       null,
+       "Выкл."
+     ],
+     "Symbol": [
+       null,
+       "Символ"
+     ],
+     "Currency": [
+       null,
+       "Валюта"
+     ],
+     "Status": [
+       null,
+       "Статус"
+     ],
+     "Staking": [
+       null,
+       "Staking"
+     ],
+     "Block": [
+       null,
+       "Блок"
+     ],
+     "Progress": [
+       null,
+       "Прогресс"
+     ],
+     "Updated": [
+       null,
+       "Обнавлен"
+     ],
+     "Connection": [
+       null,
+       "Соединений"
+     ],
+     "Version": [
+       null,
+       "Версия"
+     ],
+     "Peers": [
+       null,
+       "Пиры"
+     ],
+     "Avalable": [
+       null,
+       "Доступно"
+     ],
+     "Hold": [
+       null,
+       "В ордерах"
+     ],
+     "USD": [
+       null,
+       "USD"
+     ],
+     "Actions": [
+       null,
+       "Действия"
+     ],
+     "Sign In": [
+       null,
+       "Войти в систему"
+     ],
+     "Remember me": [
+       null,
+       "Запомни меня"
+     ],
+     "Forgot pwd?": [
+       null,
+       "Забыли пароль?"
+     ],
+     "Don't have an account?": [
+       null,
+       "У вас нет учетной записи?"
+     ],
+     "Sign Up": [
+       null,
+       "Зарегистрироваться"
+     ],
+     "Recover Password": [
+       null,
+       "Восстановить пароль"
+     ],
+     "Enter your Email and instructions will be sent to you!": [
+       null,
+       "Введите свой адрес электронной почты, и инструкции будут отправлены вам!"
+     ],
+     "Reset": [
+       null,
+       "Сброс"
+     ],
+     "Password": [
+       null,
+       "Пароль"
+     ],
+     "Email": [
+       null,
+       "Электронная почта"
+     ]
+   }
+}
+

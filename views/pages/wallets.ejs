@@ -3,10 +3,10 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
 	<div class="col-md-6 col-8 align-self-center">
-		<h3 class="text-themecolor m-b-0 m-t-0">Wallets status</h3>
+		<h3 class="text-themecolor m-b-0 m-t-0"><%= gettext("Wallets status") %></h3>
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/">Home</a></li>
-			<li class="breadcrumb-item active">Wallets status</li>
+			<li class="breadcrumb-item"><a href="/"><%= gettext("Home") %></a></li>
+			<li class="breadcrumb-item active"><%= gettext("Wallets status") %></li>
 		</ol>
 	</div>
 </div>
@@ -25,30 +25,30 @@
 					<table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>
 						<tr>
-							<th>Symbol</th>
-							<th>Currency</th>
-							<th>Status</th>
-							<th>Staking</th>
-							<th>Block</th>
-							<th>Progress</th>
-							<th>Updated</th>
-							<th>Connection</th>
-							<th>Version</th>
-							<th>Peers</th>
+							<th><%= gettext("Symbol") %></th>
+							<th><%= gettext("Currency") %></th>
+							<th><%= gettext("Status") %></th>
+							<th><%= gettext("Staking") %></th>
+							<th><%= gettext("Block") %></th>
+							<th><%= gettext("Progress") %></th>
+							<th><%= gettext("Updated") %></th>
+							<th><%= gettext("Connection") %></th>
+							<th><%= gettext("Version") %></th>
+							<th><%= gettext("Peers") %></th>
 						</tr>
 						</thead>
 						<tfoot>
 						<tr>
-							<th>Symbol</th>
-							<th>Currency</th>
-							<th>Status</th>
-							<th>Staking</th>
-							<th>Block</th>
-							<th>Progress</th>
-							<th>Updated</th>
-							<th>Connection</th>
-							<th>Version</th>
-							<th>Peers</th>
+							<th><%= gettext("Symbol") %></th>
+							<th><%= gettext("Currency") %></th>
+							<th><%= gettext("Status") %></th>
+							<th><%= gettext("Staking") %></th>
+							<th><%= gettext("Block") %></th>
+							<th><%= gettext("Progress") %></th>
+							<th><%= gettext("Updated") %></th>
+							<th><%= gettext("Connection") %></th>
+							<th><%= gettext("Version") %></th>
+							<th><%= gettext("Peers") %></th>
 						</tr>
 						</tfoot>
 						<tbody>
@@ -56,8 +56,8 @@
 						<tr id="currency=<%=node.currency %>">
 							<td><img src="http://localhost:9001/images/<%=node.currency%>.png" height="20px" width="20px"> <%=node.currency %></td>
 							<td><%=node.currencyname %></td>
-							<td><span class="label label-<% if(node.active == true){ %>success<% } else{ %>danger<% } %>"><% if(node.active == true){ %>Active<% } else{ %>Maintenance<% } %></span></td>
-							<td><span class="label label-<% if(node.staking == true){ %>success<% } else{ %>danger<% } %>"><% if(node.staking  == true){ %>On<% } else{ %>Off<% } %></span></td>
+							<td><span class="label label-<% if(node.active == true){ %>success<% } else{ %>danger<% } %>"><% if(node.active == true){ %><%= gettext("Active") %><% } else{ %><%= gettext("Maintenance") %><% } %></span></td>
+							<td><span class="label label-<% if(node.staking == true){ %>success<% } else{ %>danger<% } %>"><% if(node.staking  == true){ %><%= gettext("On") %><% } else{ %><%= gettext("Off") %><% } %></span></td>
 							<td><%=node.last_block_read %></td>
 							<td><div class="progress"><div class="progress-bar bg-success active progress-bar-striped wow animated progress-animated" style="width: <%=node.net %>%;" role="progressbar"><%=node.net %>%</div></div></td>
 							<td><%=node.block_time %></td>

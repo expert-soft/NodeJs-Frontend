@@ -8,11 +8,14 @@ var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var cookieParser = require('cookie-parser');
 var sharedsession = require("express-socket.io-session");
+var i18n = require('i18n-abide');
 var db = require('./db');
 var feed = require('./feed');
 var CONFIG = require('./config.json');
 var net = require('net');
-var session = require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false })
+
+var session = require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false });
+
 // Configure the local strategy for use by Passport.
 //
 // The local strategy require a `verify` function which receives the credentials
@@ -52,6 +55,13 @@ var port = CONFIG.server_port;
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+app.use(i18n.abide({
+    supported_languages: ['en-US', 'ru'],
+    default_lang: 'en-US',
+    translation_directory: 'i18n',
+    locale_on_url: false
+}));
+
 // use ejs and express layouts
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
@@ -86,8 +96,18 @@ app.post('/login',
         res.redirect('/');
     });
 
-// setting static files (css, img) location
+app.get('/change_lang',
+    function(requests, responses){
+        requests.setLocale(requests.query.lang);
+        requests.headers['accept-language'] = requests.query.lang;
+        requests.lang = requests.query.lang;
+        requests.locale = requests.query.lang;
+        responses.locals.lang = requests.query.lang;
+        responses.locals.locale = requests.query.lang;
+        responses.redirect('/');
+    });
 
+// setting static files (css, img) location
 app.use(express.static(__dirname+'/public'));
 
 // start our server

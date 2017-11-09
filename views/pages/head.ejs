@@ -3,6 +3,28 @@
 <!-- ============================================================== -->
 <header class="topbar">
     <nav class="navbar top-navbar navbar-toggleable-sm navbar-light">
+        <div class="navbar-collapse">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav mr-auto mt-md-0 ">
+                <!-- This is  -->
+                <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav my-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
+                    <div class="dropdown-menu  dropdown-menu-right animated bounceInDown">
+                        <a class="dropdown-item" href="/change_lang?lang=ru"><i class="flag-icon flag-icon-ru"></i> Russian</a>
+                        <a class="dropdown-item" href="/change_lang?lang=en-US"><i class="flag-icon flag-icon-us"></i> English</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
 <!-- ============================================================== -->
@@ -19,26 +41,26 @@
             <ul id="sidebarnav">
                 <li class="nav-small-cap">PERSONAL</li>
                 <li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
+                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu"><%= gettext("Dashboard") %> </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <% if (!user) { %>
-                        <li><a href="wallets">Wallets status</a></li>
-                        <li><a href="login">Login</a></li>
+                        <li><a href="wallets"><%= gettext("Wallets status") %></a></li>
+                        <li><a href="login"><%= gettext("Login") %></a></li>
                         <% } else { %>
-                        <li><a href="wallets">Wallets status</a></li>
-                        <li><a href="balances">Balances</a></li>
-                        <li><a href="logout">Logout</a></li>
+                        <li><a href="wallets"><%= gettext("Wallets status") %></a></li>
+                        <li><a href="balances"><%= gettext("Balances") %></a></li>
+                        <li><a href="logout"><%= gettext("Logout") %></a></li>
                         <% } %>
                     </ul>
                 </li>
                 <li>
-                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Pool </span></a>
+                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu"><%= gettext("Pool") %> </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <% if (!user) { %>
-                        <li><a href="pool">Pool</a></li>
+                        <li><a href="pool"><%= gettext("Pool") %></a></li>
                         <% } else { %>
-                        <li><a href="pool">Pool</a></li>
-                        <li><a href="balances">Balances</a></li>
+                        <li><a href="pool"><%= gettext("Pool") %></a></li>
+                        <li><a href="balances"><%= gettext("Balances") %></a></li>
                         <% } %>
                     </ul>
                 </li>
