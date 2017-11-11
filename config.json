@@ -2,10 +2,12 @@
   "server_port": 8080,
   "EaaS_host": "localhost",
   "EaaS_port": 9001,
-  "EaaS_wallet_server_host": "127.0.0.1",
-  "EaaS_wallet_server_port": 9998,
+  "EaaS_tcp_port": 9998,
+  "EaaS_pool_host": "localhost",
+  "EaaS_pool_tcp_port": 9997,
   "EaaS_account": "crypto-trade.net",
   "EaaS_API_finduser": "/iapi/1/finduser",
   "EaaS_API_authenticate": "/iapi/1/authenticate",
-  "EaaS_API_balances": "/iapi/1/balance"
+  "EaaS_API_balances": "/iapi/1/balance",
+  "EaaS_API_nodes": "/iapi/1/node"
 }

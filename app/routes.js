@@ -44,13 +44,13 @@ router.get('/logout',
 // route for our about
 router.get('/wallets',
     function(requests, responses){
-    http.get('http://localhost:9001/iapi/1/node', (resp) => {
+    http.get('http://'+ CONFIG.EaaS_host + ":" + CONFIG.EaaS_port + CONFIG.EaaS_API_nodes, (resp) => {
         let data = '';
 
 		// A chunk of data has been recieved.
 		resp.on('data', (chunk) => {
 			data += chunk;
-	});
+	    });
 
 		// The whole response has been received. Print out the result.
 		resp.on('end', () => {
@@ -138,10 +138,5 @@ router.get('/balances',
 router.get('/pool',
     function(requests, responses){
 	responses.render('pages/pool', { user: requests.user });
-});
-
-router.post('/contact',
-    function(requests, responses){
-	responses.send('Thanks for contacting us ' + requests.body.name +'! We will respond shortly.');
 });
 

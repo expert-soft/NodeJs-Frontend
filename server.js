@@ -50,7 +50,11 @@ passport.deserializeUser(function(id, cb) {
 });
 
 var app = express();
+var host = CONFIG.EaaS_host;
 var port = CONFIG.server_port;
+var tcp_port = CONFIG.EaaS_tcp_port;
+var pool_host = CONFIG.EaaS_pool_host;
+var pool_tcp_port = CONFIG.EaaS_pool_tcp_port;
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -115,37 +119,124 @@ http.listen(port, function () {
 });
 
 var client = new net.Socket();
-client.connect(CONFIG.EaaS_wallet_server_port, CONFIG.EaaS_wallet_server_host, function() {
-    console.log('Connected:');
+
+client.connect(tcp_port, host, function() {
+    console.log('Connected on EaaS host:' + host + " port:" + tcp_port);
 });
 
 client.on('close', function() {
     console.log('Connection closed');
 });
 
-client.on('error', function() {
-   console.log('Connection error');
+client.on('error', function(err) {
+    console.log('Connection error:' + err);
 });
 
+client.on('end', () => {
+    console.log('disconnected from server');
+});
+
+var pool_client = new net.Socket();
+
+pool_client.connect(pool_tcp_port, pool_host, function() {
+    console.log('Connected on Pool host:' + pool_host + " port:" + pool_tcp_port);
+});
+
+pool_client.on('close', function() {
+    console.log('Connection closed');
+});
+
+pool_client.on('error', function(err) {
+    console.log('Connection error:' + err);
+});
+
+client.on('end', () => {
+    console.log('disconnected from server');
+});
+
+var clients = [];
+
 io.on('connection', function (socket) {
+
+    clients.push(socket);
+
     if (socket.handshake.session.passport == undefined){
         var name = socket.id;
+        socket.join('main');
         console.log(name + ' connected to chat!');
     }else{
         if (socket.handshake.session.passport.user == undefined){
             var name = socket.id;
+            socket.join('main');
             console.log(name + ' connected to chat!');
         }else {
             var name = socket.handshake.session.passport.user;
             console.log(name + ' connected to chat!');
+            socket.join(name);
         }
-
     }
 
-
-    client.on('data', function(data) {
-        socket.emit("new message", data.toString());
-        console.log('Received: ' + data.toString());
+    socket.on('disconnect', function() {
+        console.log('Got disconnect!');
+        var i = clients.indexOf(socket);
+        clients.splice(i, 1);
     });
 
 });
+
+client.on('data', function(data) {
+    for (var i=0;i<clients.length;i++) {
+        clients[i].nsp.to('main').emit("new message", data.toString());
+        console.log('EaaS Received: ' + data.toString());
+    }
+});
+
+pool_client.on('data', function(data) {
+    try {
+        for (var i=0;i<clients.length;i++) {
+            var obj = JSON.parse(data.toString());
+            if (clients[i].handshake.session.passport == undefined){
+                if (obj.command == "pool-hashrate"){
+                    clients[i].nsp.to('main').emit("new message", data.toString());
+                    console.log('Pool Received main: ' + data.toString());
+                } else {
+                    if (obj.command == "pool-user-hashrate"){
+
+                    }
+                }
+            }else{
+                if (clients[i].handshake.session.passport.user == undefined){
+                    if (obj.command == "pool-hashrate") {
+                        clients[i].nsp.to('main').emit("new message", data.toString());
+                        console.log('Pool Received main: ' + data.toString());
+                    } else {
+                        if (obj.command == "pool-user-hashrate"){
+
+                        }
+                    }
+                }else {
+                    var name = clients[i].handshake.session.passport.user;
+                    if (obj.command == "pool-hashrate") {
+                        clients[i].nsp.to(name).emit("new message", data.toString());
+                        console.log('Pool Received private: ' + data.toString());
+                    } else {
+                        if (obj.command == "pool-user-hashrate"){
+                            clients[i].nsp.to(name).emit("new message", data.toString());
+                            console.log('Pool Received private: ' + data.toString());
+                        }
+                    }
+                }
+            }
+
+        }
+        //io.sockets.in('main').emit('new message', 'what is going on, party people?');
+    } catch (e) {
+        console.log('json parse error:' + e.message)
+    }
+
+});
+
+
+
+
+

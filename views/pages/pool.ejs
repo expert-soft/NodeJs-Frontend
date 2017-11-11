@@ -3,14 +3,82 @@
 <!-- ============================================================== -->
 <div class="row page-titles">
     <div class="col-md-6 col-8 align-self-center">
-        <h3 class="text-themecolor m-b-0 m-t-0">Pool</h3>
+        <h3 class="text-themecolor m-b-0 m-t-0"><%= gettext("Pool") %></h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">Pool</li>
+            <li class="breadcrumb-item"><a href="/"><%= gettext("Home") %></a></li>
+            <li class="breadcrumb-item active"><%= gettext("Pool") %></li>
         </ol>
     </div>
 </div>
+
+<!-- Row -->
+<div id="user" class="row">
+</div>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div id="time" class="card-block">
+                        <h3>Realtime Data of hashrate</h3>
+                        <h6 class="card-subtitle">Mon 05 Mar 2017</h6>
+                        <div class="demo-container" style="height:200px;">
+                            <div id="placeholder" class="flot-chart-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Current blocks</h4>
+                <div class="table-responsive">
+                    <table id='myTable' class="table stylish-table">
+                        <thead>
+                        <tr>
+                            <th style="width:180px;"><%= gettext("Symbol") %></th>
+                            <th>Assign hashrate</th>
+                            <th>DIFF</th>
+                            <th>Market</th>
+                            <th style="width:180px;">Base</th>
+                            <th>Price in BTC</th>
+                            <th>Block</th>
+                            <th>Reward</th>
+                            <th>Assign workers</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ============================================================== -->
 <!-- End Bread crumb and right sidebar toggle -->
 <!-- ============================================================== -->
 
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+
+<!-- Flot Charts JavaScript -->
+<script src="/plugins/flot/excanvas.js"></script>
+<script src="/plugins/flot/jquery.flot.js"></script>
+<script src="/plugins/flot/jquery.flot.time.js"></script>
+<script src="/plugins/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+
+<script src="/plugins/moment/moment.js?v=1.0.0.0"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/pool-socketio.js"></script>
