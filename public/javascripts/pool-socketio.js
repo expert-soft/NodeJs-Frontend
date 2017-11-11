@@ -154,7 +154,7 @@ function update_user_hashrate(data){
     widget = document.getElementById("worker=" + data.worker);
     if (widget != null){
         widget.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].src = "/images/logo/" + data.currency + ".png";
-        widget.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].data = data.hashrate;
+        widget.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].data = data.hashrate;
         widget.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].data = data.worker;
     }else{
         var user = document.getElementById("user");

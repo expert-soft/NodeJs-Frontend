@@ -139,6 +139,7 @@ client.on('end', () => {
 var pool_client = new net.Socket();
 
 pool_client.connect(pool_tcp_port, pool_host, function() {
+    pool_client.setNoDelay(true);
     console.log('Connected on Pool host:' + pool_host + " port:" + pool_tcp_port);
 });
 
@@ -193,48 +194,60 @@ client.on('data', function(data) {
 
 pool_client.on('data', function(data) {
     try {
-        for (var i=0;i<clients.length;i++) {
-            var obj = JSON.parse(data.toString());
-            if (clients[i].handshake.session.passport == undefined){
-                if (obj.command == "pool-hashrate"){
-                    clients[i].nsp.to('main').emit("new message", data.toString());
-                    console.log('Pool Received main: ' + data.toString());
-                } else {
-                    if (obj.command == "pool-user-hashrate"){
-
-                    }
-                }
-            }else{
-                if (clients[i].handshake.session.passport.user == undefined){
-                    if (obj.command == "pool-hashrate") {
-                        clients[i].nsp.to('main').emit("new message", data.toString());
-                        console.log('Pool Received main: ' + data.toString());
-                    } else {
-                        if (obj.command == "pool-user-hashrate"){
-
+        data.toString().split("\n").forEach(function(entry) {
+            if (entry.length > 1){
+                for (var i=0;i<clients.length;i++) {
+                    var obj = JSON.parse(entry);
+                    if (clients[i].handshake.session.passport == undefined){
+                        if (obj.command == "pool-hashrate"){
+                            clients[i].nsp.to('main').emit("new message", entry);
+                            console.log('Pool Received main: ' + entry);
+                        } else {
+                            if (obj.command == "pool-currency"){
+                                clients[i].nsp.to('main').emit("new message", entry);
+                                console.log('Pool Received main: ' + entry);
+                            }
+                        }
+                    }else{
+                        if (clients[i].handshake.session.passport.user == undefined){
+                            if (obj.command == "pool-hashrate") {
+                                clients[i].nsp.to('main').emit("new message", entry);
+                                console.log('Pool Received main: ' + entry);
+                            } else {
+                                if (obj.command == "pool-currency"){
+                                    clients[i].nsp.to('main').emit("new message", entry);
+                                    console.log('Pool Received main: ' + entry);
+                                }
+                            }
+                        }else {
+                            var name = clients[i].handshake.session.passport.user;
+                            if (obj.command == "pool-hashrate") {
+                                clients[i].nsp.to(name).emit("new message", entry);
+                                console.log('Pool Received private: ' + entry);
+                            } else {
+                                if (obj.command == "pool-user-hashrate"){
+                                    clients[i].nsp.to(name).emit("new message", entry);
+                                    console.log('Pool Received private: ' + entry);
+                                } else {
+                                    if (obj.command == "pool-currency"){
+                                        clients[i].nsp.to(name).emit("new message", entry);
+                                        console.log('Pool Received private: ' + entry);
+                                    }
+                                }
+                            }
                         }
                     }
-                }else {
-                    var name = clients[i].handshake.session.passport.user;
-                    if (obj.command == "pool-hashrate") {
-                        clients[i].nsp.to(name).emit("new message", data.toString());
-                        console.log('Pool Received private: ' + data.toString());
-                    } else {
-                        if (obj.command == "pool-user-hashrate"){
-                            clients[i].nsp.to(name).emit("new message", data.toString());
-                            console.log('Pool Received private: ' + data.toString());
-                        }
-                    }
+
                 }
             }
-
-        }
-        //io.sockets.in('main').emit('new message', 'what is going on, party people?');
+      });
     } catch (e) {
         console.log('json parse error:' + e.message)
     }
 
 });
+
+
 
 
 
