@@ -5,22 +5,6 @@ var data = []
 
 var max = 5;
 
-function getRandomData(hash) {
-    if (data.length > 0) data = data.slice(1);
-    // Do a random walk
-    while (data.length < totalPoints) {
-        // var prev = data.length > 0 ? data[data.length - 1] : 0
-        //     , y = prev + hash;
-        var y = hash;
-        data.push(y);
-    }
-    // Zip the generated y values with the x values
-    var res = [];
-    for (var i = 0; i < data.length; ++i) {
-        res.push([i, data[i]])
-    }
-    return res;
-}
 
 var plot = $.plot("#placeholder", [getRandomData(0)], {
     series: {
@@ -28,7 +12,7 @@ var plot = $.plot("#placeholder", [getRandomData(0)], {
     }
     , yaxis: {
         min: 0
-       , max: 5
+        , max: 5
     }
     , xaxis: {
         show: false
@@ -47,6 +31,22 @@ var plot = $.plot("#placeholder", [getRandomData(0)], {
     }
 });
 
+function getRandomData(hash) {
+    if (data.length > 0) data = data.slice(1);
+    // Do a random walk
+    while (data.length < totalPoints) {
+        // var prev = data.length > 0 ? data[data.length - 1] : 0
+        //     , y = prev + hash;
+        var y = hash;
+        data.push(y);
+    }
+    // Zip the generated y values with the x values
+    var res = [];
+    for (var i = 0; i < data.length; ++i) {
+        res.push([i, data[i]])
+    }
+    return res;
+}
 
 function roundToTwo(num, point){
     return Math.ceil(num * point)/point;
@@ -64,10 +64,13 @@ function update_pool_currency(data){
             tr.cells[5].childNodes[0].childNodes[0].data = data.price;
             tr.cells[6].childNodes[0].childNodes[0].data = data.block;
             tr.cells[7].childNodes[0].childNodes[0].data = data.reward;
+            tr.cells[8].childNodes[0].childNodes[0].data = data.connection;
+            tr.cells[9].childNodes[0].childNodes[0].data = data.profitability.toFixed(2);
     }else{
         var table=document.getElementById("myTable");
         var row=table.insertRow(myTable.rows.length);
         row.id = "currency=" + data.currency;
+
         var cell1=row.insertCell(0);
         var img = document.createElement('img');
 
@@ -130,8 +133,14 @@ function update_pool_currency(data){
         h5.textContent = data.connection;
         cell9.appendChild(h5);
 
+        var cell10=row.insertCell(9);
+        var h5 = document.createElement('h5');
+        h5.textContent = data.profitability.toFixed(2);
+        cell10.appendChild(h5);
     }
-    console.log(data)
+
+    console.log(data);
+
 };
 
 function update_pool_hashrate(data){
@@ -149,18 +158,23 @@ function update_pool_hashrate(data){
 
 };
 
+function update_pool_found_block(data){
+
+    console.log(data);
+};
+
 function update_user_hashrate(data){
 
-    widget = document.getElementById("worker=" + data.worker);
+    widget = document.getElementById("worker_id=" + data.id);
     if (widget != null){
         widget.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].src = "/images/logo/" + data.currency + ".png";
         widget.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].data = data.hashrate;
-        widget.childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].data = data.worker;
+        widget.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].data = data.worker;
     }else{
         var user = document.getElementById("user");
 
         var div_main = document.createElement('div');
-        div_main.id = "worker=" + data.worker;
+        div_main.id = "worker_id=" + data.id;
         div_main.classList.add('col-lg-3');
         div_main.classList.add('col-md-6');
         user.appendChild(div_main);
@@ -195,7 +209,6 @@ function update_user_hashrate(data){
         // d_flex2.appendChild(h52);
 
         var round_info = document.createElement('div');
-        round_info.classList.add('round');
         round_info.classList.add('align-self-center');
         round_info.classList.add('round-info');
         d_flex.appendChild(round_info);
@@ -230,6 +243,22 @@ function update_user_hashrate(data){
 
 };
 
+function drop_pool_currency(data){
+    tr = document.getElementById("currency=" + data.currency);
+    if (tr != null) {
+        tr.parentNode.removeChild(tr);
+        console.log(data.toString());
+    }
+};
+
+function pool_user_drop(data){
+    tr = document.getElementById("worker_id=" + data.id);
+    if (tr != null) {
+        tr.parentNode.removeChild(tr);
+        console.log(data.toString());
+    }
+};
+
 socket.on('new message', function (data) {
     console.log('data:' + data);
     jsondata = JSON.parse(data);
@@ -245,6 +274,15 @@ socket.on('new message', function (data) {
             break;
         case "pool-user-hashrate":
             update_user_hashrate(jsondata);
+            break;
+        case "pool-block-found":
+            update_pool_found_block(jsondata);
+            break;
+        case "pool-currency-drop":
+            drop_pool_currency(jsondata);
+            break;
+        case "pool-user-drop":
+            pool_user_drop(jsondata);
             break;
         default:
             console.log(jsondata.command + " unknown command");

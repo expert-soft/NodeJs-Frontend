@@ -41,7 +41,7 @@
             <div class="card-block">
                 <h4 class="card-title">Current blocks</h4>
                 <div class="table-responsive">
-                    <table id='myTable' class="table stylish-table">
+                    <table id="myTable" class="table stylish-table">
                         <thead>
                         <tr>
                             <th style="width:180px;"><%= gettext("Symbol") %></th>
@@ -53,6 +53,7 @@
                             <th>Block</th>
                             <th>Reward</th>
                             <th>Assign workers</th>
+                            <th>Profitability</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,6 +72,7 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
+
 <script src="/plugins/jquery/jquery.min.js"></script>
 
 <!-- Flot Charts JavaScript -->
@@ -78,6 +80,9 @@
 <script src="/plugins/flot/jquery.flot.js"></script>
 <script src="/plugins/flot/jquery.flot.time.js"></script>
 <script src="/plugins/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+
+<!-- This is data table -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
 
 <script src="/plugins/moment/moment.js?v=1.0.0.0"></script>
 <script src="/socket.io/socket.io.js"></script>
